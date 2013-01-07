@@ -1,0 +1,46 @@
+ 1 #include <iostream>  
+ 2 #include <fstream>  
+ 3 #include <string>  
+ 4 
+ 5 struct TreeNode
+ 6 {
+ 7   struct TreeNode* left;
+ 8   struct TreeNode* right;
+ 9   char  elem;
+10 };
+11 
+12 void BinaryTreeFromOrderings(char* inorder, char* preorder, int length)
+13 {
+14   if(length == 0)
+15     {
+16       //cout<<"invalid length";
+17       return;
+18     }
+19   TreeNode* node = new TreeNode;//Noice that [new] should be written out.
+20   node->elem = *preorder;
+21   int rootIndex = 0;
+22   for(;rootIndex < length; rootIndex++)
+23     {
+24       if(inorder[rootIndex] == *preorder)
+25       break;
+26     }
+27   //Left
+28   BinaryTreeFromOrderings(inorder, preorder +1, rootIndex);
+29   //Right
+30   BinaryTreeFromOrderings(inorder + rootIndex + 1, preorder + rootIndex + 1, length - (rootIndex + 1));
+31   cout<<node->elem<<endl;
+32   return;
+33 }
+34 
+35 
+36 int main(int argc, char* argv[])
+37 {
+38     printf("Hello World!\n");
+39     char* pr="GDAFEMHZ";
+40     char* in="ADEFGHMZ";
+41   
+42     BinaryTreeFromOrderings(in, pr, 8);
+43 
+44     printf("\n");
+45     return 0;
+46 }
